@@ -29,8 +29,7 @@ const morseCodeMap: { [key: string]: string } = {
   X: '-.',
   Y: '.-',
   Z: '..-.',
-  LetterGap: '|',
-  Space: '|##|'
+  Space: '##'
 };
 
 const sampleSentences = [
@@ -179,9 +178,9 @@ function MorseCode() {
         word
           .split('')
           .map((char) => morseCodeMap[char] || char)
-          .join(' | ')
+          .join(' ')
       )
-      .join('   |##|  ');
+      .join('   ##  ');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -227,7 +226,7 @@ function MorseCode() {
 
         {!showSuccess && (
           <>
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div className="bg-white rounded-lg shadow-lg p-6 mb-8 w-[1200px] ml-[-120px] mx-auto">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">
                 Morse Code Reference
               </h2>
@@ -245,7 +244,7 @@ function MorseCode() {
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-[1200px] ml-[-120px] mx-auto">
               <h2 className="text-xl font-semibold mb-4 text-gray-800">
                 Decode Message {currentIndex + 1}/3:
               </h2>
