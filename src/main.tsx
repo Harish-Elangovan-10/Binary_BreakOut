@@ -1,6 +1,6 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import Maze from './Maze';
 import Flip from './Flip';
 import Round3 from './Round3';
@@ -10,18 +10,34 @@ import Puzzle from './Puzzle';
 import './index.css';
 import Intro from './Intro';
 
+function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Only redirect on refresh if we're not already on the home page
+    if (location.pathname !== '/' && window.performance && window.performance.navigation.type === 1) {
+      navigate('/');
+    }
+  }, []);  // Run only once when component mounts
+
+  return (
+    <Routes>
+      <Route path="/" element={<Intro />} />
+      <Route path="/Maze" element={<Maze />} />
+      <Route path="/Flip" element={<Flip />} />
+      <Route path="/Round3" element={<Round3 />} />
+      <Route path='/MorseCode' element={<MorseCode />} />
+      <Route path='/Vault' element={<Vault />} />
+      <Route path='/Puzzle' element={<Puzzle />} />
+    </Routes>
+  );
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Intro />} />
-        <Route path="/Maze" element={<Maze />} />
-        <Route path="/Flip" element={<Flip />} />
-        <Route path="/Round3" element={<Round3 />} />
-        <Route path='/MorseCode' element={<MorseCode />} />
-        <Route path='/Vault' element={<Vault />} />
-        <Route path='/Puzzle' element={<Puzzle />} />
-      </Routes>
+      <App />
     </BrowserRouter>
   </StrictMode>
 );
